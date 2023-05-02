@@ -1,4 +1,6 @@
 import * as linkify from 'linkifyjs'
+import { marked } from 'marked'
+import hljs from 'highlight.js'
 // require('linkifyjs/plugins/hashtag')(linkify)
 
 export default (text, doLinkify, textFormatting) => {
@@ -49,15 +51,31 @@ export default (text, doLinkify, textFormatting) => {
 		}
 	}
 
-	const json = compileToJSON(text, pseudoMarkdown)
+  const render = new marked.Renderer()
+  marked.setOptions({
+    renderer: render, // 这是必填项
+    gfm: true,	// 启动类似于Github样式的Markdown语法
+    pedantic: false, // 只解析符合Markdwon定义的，不修正Markdown的错误
+    sanitize: false, // 原始输出，忽略HTML标签（关闭后，可直接渲染HTML标签）
 
-	const html = compileToHTML(json, pseudoMarkdown)
+    // 高亮的语法规范
+    highlight: (code, lang) => hljs.highlight(code, { language: lang }).value
+  })
+  const md = marked(text)
+  // console.log('md', md)
+  return [{
+    value: md
+  }]
 
-	const result = [].concat.apply([], html)
-
-	if (doLinkify) linkifyResult(result)
-
-	return result
+// 	const json = compileToJSON(text, pseudoMarkdown)
+// console.log('json', json)
+// 	const html = compileToHTML(json, pseudoMarkdown)
+//   console.log('html', html)
+// 	const result = [].concat.apply([], html)
+//
+// 	if (doLinkify) linkifyResult(result)
+//
+// 	return result
 }
 
 function compileToJSON(str, pseudoMarkdown) {

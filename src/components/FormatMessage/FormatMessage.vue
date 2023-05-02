@@ -60,7 +60,10 @@
 						</div>
 					</template>
 					<template v-else>
-						<span v-html="message.value" />
+						<span
+              class="md-block"
+              v-html="message.value"
+            />
 					</template>
 				</component>
 			</div>
@@ -119,8 +122,9 @@ export default {
 				m.tag = this.checkType(m, 'tag')
 				m.image = this.checkImageType(m)
 				m.value = this.replaceEmojiByElement(m.value)
-			})
-
+      })
+      // console.log(this.formatTags(this.content))
+      // console.log(message)
 			return message
 		},
 		formattedContent() {

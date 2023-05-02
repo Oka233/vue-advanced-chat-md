@@ -66,6 +66,8 @@
 	},
 	"dependencies": {
 		"emoji-picker-element": "1.12.1",
-		"linkifyjs": "2.1.9"
+		"highlight.js": "^11.8.0",
+		"linkifyjs": "2.1.9",
+		"marked": "^5.0.0"
 	}
 }
