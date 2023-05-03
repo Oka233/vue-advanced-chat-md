@@ -51,20 +51,27 @@ export default (text, doLinkify, textFormatting) => {
 		}
 	}
 
-  const render = new marked.Renderer()
   marked.setOptions({
-    renderer: render, // 这是必填项
+    renderer: new marked.Renderer(), // 这是必填项
     gfm: true,	// 启动类似于Github样式的Markdown语法
     pedantic: false, // 只解析符合Markdwon定义的，不修正Markdown的错误
     sanitize: false, // 原始输出，忽略HTML标签（关闭后，可直接渲染HTML标签）
-
     // 高亮的语法规范
     highlight: (code, lang) => hljs.highlight(code, { language: lang }).value
   })
-  const md = marked(text)
   // console.log('md', md)
+  const doc = new DOMParser().parseFromString(marked(text), 'text/html')
+  const tables = doc.getElementsByTagName('table')
+  for (let i = 0; i < tables.length; i++) {
+    const table = tables[i]
+    const div = document.createElement('div')
+    div.className = 'md-table-container'
+    table.parentNode.insertBefore(div, table)
+    div.appendChild(table)
+  }
+  const htmlStringFromDoc = new XMLSerializer().serializeToString(doc.body)
   return [{
-    value: md
+    value: htmlStringFromDoc.substring(43, htmlStringFromDoc.length - 7)
   }]
 
 // 	const json = compileToJSON(text, pseudoMarkdown)

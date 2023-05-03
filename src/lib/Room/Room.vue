@@ -423,7 +423,7 @@ export default {
 					setTimeout(() => {
 						element.scrollTo({ top: element.scrollHeight })
 						this.updateLoadingMessages(false)
-					})
+					}, 300)
 				}
 			)
 		},
