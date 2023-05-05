@@ -7,7 +7,7 @@ export default defineConfig({
 	build: {
 		lib: {
 			entry: resolve(__dirname, 'src/lib/index.js'),
-			name: 'vue-advanced-chat'
+			name: 'vue-advanced-chat-md'
 		},
 		rollupOptions: {
 			output: {

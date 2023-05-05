@@ -1,35 +1,23 @@
 {
-	"name": "vue-advanced-chat",
-	"version": "2.0.7",
+	"name": "vue-advanced-chat-md",
+	"version": "2.0.7-alpha.0",
 	"license": "MIT",
-	"description": "A beautiful chat rooms component made with Vue.js - compatible with Vue, React & Angular",
-	"author": {
-		"email": "antoindupontdev@gmail.com",
-		"name": "Antoine Dupont"
-	},
+	"description": "Vue-advanced-chat with markdown support",
+	"author": "Oka233",
 	"types": "./types/vue-advanced-chat.common.d.ts",
-	"keywords": [
-		"vue",
-		"vuejs",
-		"chat",
-		"vue-js-chat",
-		"multiple",
-		"group",
-		"rooms",
-		"realtime"
-	],
+	"keywords": [],
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/antoine92190/vue-advanced-chat.git"
+		"url": "git+https://github.com/Oka233/vue-advanced-chat-md.git"
 	},
 	"bugs": {
-		"url": "https://github.com/antoine92190/vue-advanced-chat/issues"
+		"url": "https://github.com/Oka233/vue-advanced-chat-md"
 	},
-	"homepage": "https://github.com/antoine92190/vue-advanced-chat#readme",
-	"main": "./dist/vue-advanced-chat.umd.js",
-	"module": "./dist/vue-advanced-chat.es.js",
-	"unpkg": "./dist/vue-advanced-chat.umd.js",
-	"jsdelivr": "./dist/vue-advanced-chat.umd.js",
+	"homepage": "https://github.com/Oka233/vue-advanced-chat-md",
+	"main": "./dist/vue-advanced-chat-md.umd.js",
+	"module": "./dist/vue-advanced-chat-md.es.js",
+	"unpkg": "./dist/vue-advanced-chat-md.umd.js",
+	"jsdelivr": "./dist/vue-advanced-chat-md.umd.js",
 	"scripts": {
 		"dev": "vite",
 		"build": "vite build",
