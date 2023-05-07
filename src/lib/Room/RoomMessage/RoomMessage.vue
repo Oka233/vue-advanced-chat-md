@@ -275,7 +275,8 @@ export default {
 		'message-action-handler',
 		'send-message-reaction',
 		'select-message',
-		'unselect-message'
+		'unselect-message',
+    'message-modified'
 	],
 
 	data() {
@@ -286,7 +287,7 @@ export default {
 			emojiOpened: false,
 			newMessage: {},
 			progressTime: '- : -',
-			hoverAudioProgress: false
+			hoverAudioProgress: false,
 		}
 	},
 
@@ -350,6 +351,14 @@ export default {
 	},
 
 	watch: {
+    message: {
+      deep: true,
+      handler(val) {
+        this.$emit('message-modified', {
+          ref: this.$refs.message
+        })
+      }
+    },
 		newMessages: {
 			immediate: true,
 			deep: true,
@@ -371,6 +380,10 @@ export default {
 
 	mounted() {
 		messagesValidation(this.message)
+
+    // this.$watch('message.content', (newVal, oldVal) => {
+    //   console.log('prop1 changed:', newVal, oldVal)
+    // })
 
 		this.$emit('message-added', {
 			message: this.message,

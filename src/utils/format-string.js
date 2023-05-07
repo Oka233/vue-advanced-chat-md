@@ -61,7 +61,7 @@ export default (text, doLinkify, textFormatting) => {
     highlight: (code, lang) => {
       prevLang = lang || prevLang
       lang = lang || prevLang || 'Markdown'
-      console.log('highlight code with lang ', lang)
+      // console.log('highlight code with lang ', lang)
       return hljs.highlight(code, { language: lang }).value
     }
   })

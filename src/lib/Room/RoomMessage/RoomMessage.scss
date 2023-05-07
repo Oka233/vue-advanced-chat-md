@@ -171,6 +171,7 @@
 	}
 
 	.vac-text-username {
+		user-select: none;
 		font-size: 13px;
 		color: var(--chat-message-color-username);
 		margin-bottom: 2px;
@@ -181,6 +182,7 @@
 	}
 
 	.vac-text-timestamp {
+		user-select: none;
 		font-size: 10px;
 		color: var(--chat-message-color-timestamp);
 		text-align: right;

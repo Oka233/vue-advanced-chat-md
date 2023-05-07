@@ -73,7 +73,7 @@
 							</template>
 						</loader>
 					</div>
-					<transition-group :key="roomId" name="vac-fade-message" tag="span">
+<!--					<transition-group :key="roomId" name="vac-fade-message" tag="span">-->
 						<div v-for="(m, i) in messages" :key="m.indexId || m._id">
 							<room-message
 								:current-user-id="currentUserId"
@@ -94,6 +94,7 @@
 								:selected-messages="selectedMessages"
 								:emoji-data-source="emojiDataSource"
 								@message-added="onMessageAdded"
+                @message-modified="onMessageModified"
 								@message-action-handler="messageActionHandler"
 								@open-file="openFile"
 								@open-user-tag="openUserTag"
@@ -107,7 +108,7 @@
 								</template>
 							</room-message>
 						</div>
-					</transition-group>
+<!--					</transition-group>-->
 				</div>
 			</div>
 		</div>
@@ -405,7 +406,8 @@ export default {
 			}
 		},
 		onRoomChanged() {
-			this.updateLoadingMessages(true)
+      // 关闭切换room的loading
+			this.updateLoadingMessages(false)
 			this.scrollIcon = false
 			this.scrollMessagesCount = 0
 			this.resetMessageSelection()
@@ -423,7 +425,7 @@ export default {
 					setTimeout(() => {
 						element.scrollTo({ top: element.scrollHeight })
 						this.updateLoadingMessages(false)
-					}, 200)
+					})
 				}
 			)
 		},
@@ -481,6 +483,16 @@ export default {
 				}
 			})
 		},
+    onMessageModified({ ref }) {
+      const scrollContainer = this.$refs.scrollContainer
+      let scrolledUp = true
+      if (scrollContainer) {
+        scrolledUp = this.getBottomScroll(scrollContainer) > 40
+      }
+      if (!scrolledUp && this.autoScroll.receive.new) {
+        this.scrollToBottom()
+      }
+    },
 		onContainerScroll(e) {
 			if (!e.target) return
 
