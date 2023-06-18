@@ -82,13 +82,41 @@
 			}
 		}
 	}
-	pre {
-		margin: 0.2em;
-	}
-	pre code{
+	.md-code-container {
 		@extend .hljs;
-		border-radius: 4px;
-		//padding: 8px 12px;
-		//border: 1px solid #eaeaea;
+		border-radius: 8px 8px 4px 4px;
+		.md-code-helper {
+			border-radius: 4px 4px 0 0;
+			background: #b9e4ff;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			span {
+				margin-left: 8px;
+				color: #000000
+			}
+			button {
+				margin: 4px;
+				background-color: #1E90FF;
+				color: #fff;
+				border: none;
+				border-radius: 5px;
+				cursor: pointer;
+			}
+			button:hover {
+				background-color: #007FFF;
+			}
+		}
+		pre {
+			margin: 0;
+			white-space: pre-wrap; // 解决单行过长时宽度被撑开
+			padding: 0.2em 0.6em;
+		}
+		pre code{
+			margin: 0;
+			//border-radius: 4px;
+			//padding: 8px 12px;
+			//border: 1px solid #eaeaea;
+		}
 	}
 }

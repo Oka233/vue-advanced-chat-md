@@ -50,35 +50,68 @@ export default (text, doLinkify, textFormatting) => {
 			type: 'tag'
 		}
 	}
-
-  let prevLang = null
-  marked.setOptions({
-    renderer: new marked.Renderer(), // 这是必填项
-    gfm: true,	// 启动类似于Github样式的Markdown语法
-    pedantic: false, // 只解析符合Markdown定义的，不修正Markdown的错误
-    sanitize: false, // 原始输出，忽略HTML标签（关闭后，可直接渲染HTML标签）
-    // 高亮的语法规范
-    highlight: (code, lang) => {
-      prevLang = lang || prevLang
-      lang = lang || prevLang || 'Markdown'
-      // console.log('highlight code with lang ', lang)
-      return hljs.highlight(code, { language: lang }).value
-    }
-  })
-  // console.log('md', md)
-  const doc = new DOMParser().parseFromString(marked(text), 'text/html')
-  const tables = doc.getElementsByTagName('table')
-  for (let i = 0; i < tables.length; i++) {
-    const table = tables[i]
-    const div = document.createElement('div')
-    div.className = 'md-table-container'
-    table.parentNode.insertBefore(div, table)
-    div.appendChild(table)
-  }
-  const htmlStringFromDoc = new XMLSerializer().serializeToString(doc.body)
-  return [{
-    value: htmlStringFromDoc.substring(43, htmlStringFromDoc.length - 7)
-  }]
+	const codeTypeList = []
+	const codeList = []
+	marked.setOptions({
+		renderer: new marked.Renderer(), // 这是必填项
+		gfm: true,	// 启动类似于Github样式的Markdown语法
+		pedantic: false, // 只解析符合Markdown定义的，不修正Markdown的错误
+		sanitize: false, // 原始输出，忽略HTML标签（关闭后，可直接渲染HTML标签）
+		// 高亮的语法规范
+		highlight: (code, lang) => {
+			codeList.push(code)
+			console.log(code)
+			let result = null
+			try {
+				codeTypeList.push(lang)
+				if (!lang) {
+					throw new Error()
+				}
+				result = hljs.highlight(code, { language: lang }).value
+			} catch (e) {
+				// codeTypeList.pop()
+				const res = hljs.highlightAuto(code)
+				result = res.value
+				// codeTypeList.push(res.language)
+			}
+			return result
+		}
+	})
+	// console.log('md', md)
+	const doc = new DOMParser().parseFromString(marked(text), 'text/html')
+	const tables = doc.getElementsByTagName('table')
+	tables.forEach(table => {
+		const div = document.createElement('div')
+		div.className = 'md-table-container'
+		table.parentNode.insertBefore(div, table)
+		div.appendChild(table)
+	})
+	const codeBlocks = doc.getElementsByTagName('pre')
+	window._codeList = codeList
+	codeBlocks.forEach((codeBlock, index) => {
+		const div = document.createElement('div')
+		div.className = 'md-code-container'
+		codeBlock.parentNode.insertBefore(div, codeBlock)
+		const codeHelper = document.createElement('div')
+		codeHelper.className = 'md-code-helper'
+		codeHelper.innerHTML = `
+<span>${codeTypeList[index]}</span>
+<button
+id="copyButton${index}"
+class="md-code-helper-button"
+onclick="navigator.clipboard.writeText(window._codeList[${index}]);
+console.log(document);
+const button = document.querySelector('vue-advanced-chat-md').shadowRoot.querySelector('#copyButton${index}');
+button.innerHTML='✓ 已复制';
+setTimeout(_=>{button.innerHTML='复制代码'},2500)"
+>复制代码</button>`
+		div.appendChild(codeHelper)
+		div.appendChild(codeBlock)
+	})
+	const htmlStringFromDoc = new XMLSerializer().serializeToString(doc.body)
+	return [{
+		value: htmlStringFromDoc.substring(43, htmlStringFromDoc.length - 7)
+	}]
 
 // 	const json = compileToJSON(text, pseudoMarkdown)
 // console.log('json', json)
@@ -96,7 +129,7 @@ function compileToJSON(str, pseudoMarkdown) {
 	let minIndexOf = -1
 	let minIndexOfKey = null
 
-	let links = linkify.find(str)
+	const links = linkify.find(str)
 	let minIndexFromLink = false
 
 	if (links.length > 0) {
@@ -114,9 +147,9 @@ function compileToJSON(str, pseudoMarkdown) {
 	})
 
 	if (minIndexFromLink && minIndexOfKey !== -1) {
-		let strLeft = str.substr(0, minIndexOf)
-		let strLink = str.substr(minIndexOf, links[0].value.length)
-		let strRight = str.substr(minIndexOf + links[0].value.length)
+		const strLeft = str.substr(0, minIndexOf)
+		const strLink = str.substr(minIndexOf, links[0].value.length)
+		const strRight = str.substr(minIndexOf + links[0].value.length)
 		result.push(strLeft)
 		result.push(strLink)
 		result = result.concat(compileToJSON(strRight, pseudoMarkdown))
