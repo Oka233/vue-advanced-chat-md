@@ -80,34 +80,36 @@ export default (text, doLinkify, textFormatting) => {
 	// console.log('md', md)
 	const doc = new DOMParser().parseFromString(marked(text), 'text/html')
 	const tables = doc.getElementsByTagName('table')
-	tables.forEach(table => {
-		const div = document.createElement('div')
-		div.className = 'md-table-container'
-		table.parentNode.insertBefore(div, table)
-		div.appendChild(table)
-	})
+  // 有的环境中不能给HTMLCollection使用forEach
+  for (let i = 0; i < tables.length; i++) {
+    const table = tables[i]
+    const div = document.createElement('div')
+    div.className = 'md-table-container'
+    table.parentNode.insertBefore(div, table)
+    div.appendChild(table)
+  }
 	const codeBlocks = doc.getElementsByTagName('pre')
 	window._codeList = codeList
-	codeBlocks.forEach((codeBlock, index) => {
-		const div = document.createElement('div')
-		div.className = 'md-code-container'
-		codeBlock.parentNode.insertBefore(div, codeBlock)
-		const codeHelper = document.createElement('div')
-		codeHelper.className = 'md-code-helper'
-		codeHelper.innerHTML = `
-<span>${codeTypeList[index]}</span>
+  for (let i = 0; i < codeBlocks.length; i++) {
+    const codeBlock = codeBlocks[i]
+    const div = document.createElement('div')
+    div.className = 'md-code-container'
+    codeBlock.parentNode.insertBefore(div, codeBlock)
+    const codeHelper = document.createElement('div')
+    codeHelper.className = 'md-code-helper'
+    codeHelper.innerHTML = `
+<span>${codeTypeList[i]}</span>
 <button
-id="copyButton${index}"
+id="copyButton${i}"
 class="md-code-helper-button"
-onclick="navigator.clipboard.writeText(window._codeList[${index}]);
-console.log(document);
-const button = document.querySelector('vue-advanced-chat-md').shadowRoot.querySelector('#copyButton${index}');
+onclick="navigator.clipboard.writeText(window._codeList[${i}]);
+const button = document.querySelector('vue-advanced-chat-md').shadowRoot.querySelector('#copyButton${i}');
 button.innerHTML='✓ 已复制';
 setTimeout(_=>{button.innerHTML='复制代码'},2500)"
 >复制代码</button>`
-		div.appendChild(codeHelper)
-		div.appendChild(codeBlock)
-	})
+    div.appendChild(codeHelper)
+    div.appendChild(codeBlock)
+  }
 	const htmlStringFromDoc = new XMLSerializer().serializeToString(doc.body)
 	return [{
 		value: htmlStringFromDoc.substring(43, htmlStringFromDoc.length - 7)

@@ -55473,34 +55473,35 @@ var formatString$1 = (text2, doLinkify, textFormatting) => {
   });
   const doc2 = new DOMParser().parseFromString(marked(text2), "text/html");
   const tables = doc2.getElementsByTagName("table");
-  tables.forEach((table) => {
+  for (let i = 0; i < tables.length; i++) {
+    const table = tables[i];
     const div = document.createElement("div");
     div.className = "md-table-container";
     table.parentNode.insertBefore(div, table);
     div.appendChild(table);
-  });
+  }
   const codeBlocks = doc2.getElementsByTagName("pre");
   window._codeList = codeList;
-  codeBlocks.forEach((codeBlock, index) => {
+  for (let i = 0; i < codeBlocks.length; i++) {
+    const codeBlock = codeBlocks[i];
     const div = document.createElement("div");
     div.className = "md-code-container";
     codeBlock.parentNode.insertBefore(div, codeBlock);
     const codeHelper = document.createElement("div");
     codeHelper.className = "md-code-helper";
     codeHelper.innerHTML = `
-<span>${codeTypeList[index]}</span>
+<span>${codeTypeList[i]}</span>
 <button
-id="copyButton${index}"
+id="copyButton${i}"
 class="md-code-helper-button"
-onclick="navigator.clipboard.writeText(window._codeList[${index}]);
-console.log(document);
-const button = document.querySelector('vue-advanced-chat-md').shadowRoot.querySelector('#copyButton${index}');
+onclick="navigator.clipboard.writeText(window._codeList[${i}]);
+const button = document.querySelector('vue-advanced-chat-md').shadowRoot.querySelector('#copyButton${i}');
 button.innerHTML='\u2713 \u5DF2\u590D\u5236';
 setTimeout(_=>{button.innerHTML='\u590D\u5236\u4EE3\u7801'},2500)"
 >\u590D\u5236\u4EE3\u7801</button>`;
     div.appendChild(codeHelper);
     div.appendChild(codeBlock);
-  });
+  }
   const htmlStringFromDoc = new XMLSerializer().serializeToString(doc2.body);
   return [{
     value: htmlStringFromDoc.substring(43, htmlStringFromDoc.length - 7)
