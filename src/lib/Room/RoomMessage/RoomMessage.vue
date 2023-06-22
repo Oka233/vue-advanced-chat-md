@@ -387,6 +387,7 @@ export default {
 
     this.$refs.message.addEventListener('click', (e) => {
       const button = e.target
+      if (button.className !== 'md-code-copy-button') return
       navigator.clipboard.writeText(decodeURIComponent(button.getAttribute('data-clipboard-text')))
       button.innerHTML = '✓ 已复制'
       setTimeout(_ => { button.innerHTML = '复制代码' }, 2500)

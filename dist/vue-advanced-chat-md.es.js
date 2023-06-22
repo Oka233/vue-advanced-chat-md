@@ -55456,7 +55456,6 @@ var formatString$1 = (text2, doLinkify, textFormatting) => {
     sanitize: false,
     highlight: (code, lang) => {
       codeList.push(encodeURIComponent(code));
-      console.log(code);
       let result = null;
       try {
         codeTypeList.push(lang);
@@ -55483,9 +55482,6 @@ var formatString$1 = (text2, doLinkify, textFormatting) => {
   const codeBlocks = doc2.getElementsByTagName("pre");
   for (let i = 0; i < codeBlocks.length; i++) {
     const codeBlock = codeBlocks[i];
-    codeBlock.addEventListener("click", (e) => {
-      console.log("codeBlock click", e);
-    });
     const div = document.createElement("div");
     div.className = "md-code-container";
     codeBlock.parentNode.insertBefore(div, codeBlock);
@@ -55494,7 +55490,7 @@ var formatString$1 = (text2, doLinkify, textFormatting) => {
     codeHelper.innerHTML = `
       <span>${codeTypeList[i]}</span>
       <button
-        class="md-code-helper-button"
+        class="md-code-copy-button"
         data-clipboard-text="${codeList[i]}"
       >\u590D\u5236\u4EE3\u7801</button>`;
     div.appendChild(codeHelper);
@@ -77151,6 +77147,8 @@ const _sfc_main$3 = {
     messagesValidation(this.message);
     this.$refs.message.addEventListener("click", (e) => {
       const button = e.target;
+      if (button.className !== "md-code-copy-button")
+        return;
       navigator.clipboard.writeText(decodeURIComponent(button.getAttribute("data-clipboard-text")));
       button.innerHTML = "\u2713 \u5DF2\u590D\u5236";
       setTimeout((_) => {

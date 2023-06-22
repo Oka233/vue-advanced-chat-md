@@ -99,7 +99,7 @@ export default (text, doLinkify, textFormatting) => {
     codeHelper.innerHTML = `
       <span>${codeTypeList[i]}</span>
       <button
-        class="md-code-helper-button"
+        class="md-code-copy-button"
         data-clipboard-text="${codeList[i]}"
       >复制代码</button>`
     div.appendChild(codeHelper)
