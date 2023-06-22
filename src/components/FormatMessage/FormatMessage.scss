@@ -109,6 +109,7 @@
 		}
 		pre {
 			margin: 0;
+			word-break: break-all;
 			white-space: pre-wrap; // 解决单行过长时宽度被撑开
 			padding: 0.2em 0.6em;
 		}

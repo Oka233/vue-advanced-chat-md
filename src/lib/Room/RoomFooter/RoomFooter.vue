@@ -171,13 +171,13 @@
 				<div
 					v-if="showSendIcon"
 					class="vac-svg-button"
-					:class="{ 'vac-send-disabled': isMessageEmpty }"
+					:class="{ 'vac-send-disabled': isMessageEmpty || sendDisabled }"
 					@click="sendMessage"
 				>
 					<slot name="send-icon">
 						<svg-icon
 							name="send"
-							:param="isMessageEmpty || isFileLoading ? 'disabled' : ''"
+							:param="isMessageEmpty || sendDisabled || isFileLoading ? 'disabled' : ''"
 						/>
 					</slot>
 				</div>
@@ -246,7 +246,8 @@ export default {
 		initReplyMessage: { type: Object, default: null },
 		initEditMessage: { type: Object, default: null },
 		droppedFiles: { type: Array, default: null },
-		emojiDataSource: { type: String, default: undefined }
+		emojiDataSource: { type: String, default: undefined },
+		sendDisabled: { type: Boolean, default: false }
 	},
 
 	emits: [
@@ -588,6 +589,10 @@ export default {
 			this.$emit('textarea-action-handler', this.message)
 		},
 		sendMessage() {
+      if (this.sendDisabled) {
+        return
+      }
+
 			let message = this.message.trim()
 
 			if (!this.files.length && !message) return

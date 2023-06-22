@@ -59,8 +59,8 @@ export default (text, doLinkify, textFormatting) => {
 		sanitize: false, // 原始输出，忽略HTML标签（关闭后，可直接渲染HTML标签）
 		// 高亮的语法规范
 		highlight: (code, lang) => {
-			codeList.push(code)
-			console.log(code)
+			codeList.push(encodeURIComponent(code))
+			// console.log(code)
 			let result = null
 			try {
 				codeTypeList.push(lang)
@@ -89,7 +89,6 @@ export default (text, doLinkify, textFormatting) => {
     div.appendChild(table)
   }
 	const codeBlocks = doc.getElementsByTagName('pre')
-	window._codeList = codeList
   for (let i = 0; i < codeBlocks.length; i++) {
     const codeBlock = codeBlocks[i]
     const div = document.createElement('div')
@@ -98,15 +97,11 @@ export default (text, doLinkify, textFormatting) => {
     const codeHelper = document.createElement('div')
     codeHelper.className = 'md-code-helper'
     codeHelper.innerHTML = `
-<span>${codeTypeList[i]}</span>
-<button
-id="copyButton${i}"
-class="md-code-helper-button"
-onclick="navigator.clipboard.writeText(window._codeList[${i}]);
-const button = document.querySelector('vue-advanced-chat-md').shadowRoot.querySelector('#copyButton${i}');
-button.innerHTML='✓ 已复制';
-setTimeout(_=>{button.innerHTML='复制代码'},2500)"
->复制代码</button>`
+      <span>${codeTypeList[i]}</span>
+      <button
+        class="md-code-helper-button"
+        data-clipboard-text="${codeList[i]}"
+      >复制代码</button>`
     div.appendChild(codeHelper)
     div.appendChild(codeBlock)
   }

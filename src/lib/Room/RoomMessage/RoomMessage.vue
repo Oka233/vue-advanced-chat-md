@@ -385,6 +385,13 @@ export default {
     //   console.log('prop1 changed:', newVal, oldVal)
     // })
 
+    this.$refs.message.addEventListener('click', (e) => {
+      const button = e.target
+      navigator.clipboard.writeText(decodeURIComponent(button.getAttribute('data-clipboard-text')))
+      button.innerHTML = '✓ 已复制'
+      setTimeout(_ => { button.innerHTML = '复制代码' }, 2500)
+    })
+
 		this.$emit('message-added', {
 			message: this.message,
 			index: this.index,
