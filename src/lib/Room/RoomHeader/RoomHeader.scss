@@ -29,8 +29,10 @@
 
 	.vac-rotate-icon {
 		&-init {
+			transition: none;
 			transform: rotate(360deg);
 		}
+		transition: none;
 		transform: rotate(180deg) !important;
 	}
 

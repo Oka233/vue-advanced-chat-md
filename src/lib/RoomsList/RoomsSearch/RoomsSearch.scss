@@ -29,13 +29,12 @@
 		width: 100%;
 		background: var(--chat-bg-color-input);
 		color: var(--chat-color);
-		border-radius: 4px;
 		font-size: 15px;
 		outline: 0;
 		caret-color: var(--chat-color-caret);
 		padding: 10px 10px 10px 40px;
 		border: 1px solid var(--chat-sidemenu-border-color-search);
-		border-radius: 20px;
+		//border-radius: 20px;
 
 		&::placeholder {
 			color: var(--chat-color-placeholder);

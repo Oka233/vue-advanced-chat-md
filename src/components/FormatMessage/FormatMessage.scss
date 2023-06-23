@@ -50,6 +50,7 @@
 		margin: 0.2em;
 	}
 	.md-table-container {
+		margin: 14px 0;
 		overflow: auto;
 		table {
 			border-spacing: 0;
@@ -84,40 +85,48 @@
 	}
 	.md-code-container {
 		@extend .hljs;
+		margin: 14px 0;
+		font-family: Consolas, system-ui;
 		border-radius: 8px 8px 4px 4px;
 		.md-code-helper {
 			border-radius: 4px 4px 0 0;
-			background: #b9e4ff;
+			background: #3b2e42;
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
+			height: 28px;
 			span {
 				margin-left: 8px;
-				color: #000000
+				color: #d6efff;
 			}
 			button {
+				transition: .1s;
 				margin: 4px;
-				background-color: #1E90FF;
-				color: #fff;
+				//background-color: #d6efff;
+				background-color: transparent;
+				color: #d6efff;
 				border: none;
 				border-radius: 5px;
 				cursor: pointer;
 			}
 			button:hover {
-				background-color: #007FFF;
+				background-color: #7b77a0;
 			}
 		}
 		pre {
-			margin: 0;
+			//margin: 0;
 			word-break: break-all;
 			white-space: pre-wrap; // 解决单行过长时宽度被撑开
 			padding: 0.2em 0.6em;
 		}
 		pre code{
-			margin: 0;
+			//margin: 0;
 			//border-radius: 4px;
 			//padding: 8px 12px;
 			//border: 1px solid #eaeaea;
 		}
+	}
+	:first-child {
+		margin-top: 0;
 	}
 }

@@ -1,5 +1,5 @@
 <template>
-	<div class="vac-card-window" :style="[{ height }, cssVars]">
+	<div class="vac-card-window" :style="[{ height }, cssVars]" :class='{"dark-scrollbar": theme === "dark", "dark-custom": theme === "dark"}'>
 		<div class="vac-chat-container">
 			<rooms-list
 				v-if="!singleRoomCasted"

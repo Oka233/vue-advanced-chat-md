@@ -35,3 +35,41 @@
 		}
 	}
 }
+
+.dark-scrollbar {
+	::-webkit-scrollbar {
+		width: 8px;
+	}
+	::-webkit-scrollbar-thumb {
+		background-color: #555;
+		border-radius: 10px;
+	}
+	::-webkit-scrollbar-thumb:hover {
+		background-color: #999;
+	}
+}
+
+.dark-custom {
+	.md-block:not(.md-code-helper) {
+		font-size: 16px;
+	}
+	.vac-room-selected {
+		transition: .2s;
+		border: 1px solid #ffb6f9!important;
+		.vac-room-name {
+			color: #ead4ff!important;
+		}
+	}
+	.vac-room-selected:hover {
+		background-color: #ffb6f9!important;
+	}
+	.vac-room-item {
+		transition: .2s!important;
+		border: 1px solid #181a1b;
+		border-top: 1px solid #000;
+	}
+	.vac-room-item:hover {
+		transition: .2s;
+		border: 1px solid #ffb6f9!important;
+	}
+}
