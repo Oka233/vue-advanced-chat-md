@@ -50,8 +50,11 @@
 }
 
 .dark-custom {
-	.md-block:not(.md-code-helper) {
+	.md-block {
 		font-size: 16px;
+		.md-code-helper {
+			font-size: 14px;
+		}
 	}
 	.vac-room-selected {
 		transition: .2s;
