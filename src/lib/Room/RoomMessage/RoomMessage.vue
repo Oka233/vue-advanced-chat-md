@@ -288,6 +288,7 @@ export default {
 			newMessage: {},
 			progressTime: '- : -',
 			hoverAudioProgress: false,
+      copyButtonTimers: {}
 		}
 	},
 
@@ -389,8 +390,13 @@ export default {
       const button = e.target
       if (button.className !== 'md-code-copy-button') return
       navigator.clipboard.writeText(decodeURIComponent(button.getAttribute('data-clipboard-text')))
-      button.innerHTML = '✓ 已复制'
-      setTimeout(_ => { button.innerHTML = '复制代码' }, 2500)
+      if (!this.copyButtonTimers[button]) {
+        button.innerHTML = '✓ 已复制'
+        this.copyButtonTimers[button] = setTimeout(_ => {
+          button.innerHTML = '复制代码'
+          delete this.copyButtonTimers[button]
+        }, 2500)
+      }
     })
 
 		this.$emit('message-added', {

@@ -77074,7 +77074,8 @@ const _sfc_main$3 = {
       emojiOpened: false,
       newMessage: {},
       progressTime: "- : -",
-      hoverAudioProgress: false
+      hoverAudioProgress: false,
+      copyButtonTimers: {}
     };
   },
   computed: {
@@ -77150,10 +77151,13 @@ const _sfc_main$3 = {
       if (button.className !== "md-code-copy-button")
         return;
       navigator.clipboard.writeText(decodeURIComponent(button.getAttribute("data-clipboard-text")));
-      button.innerHTML = "\u2713 \u5DF2\u590D\u5236";
-      setTimeout((_) => {
-        button.innerHTML = "\u590D\u5236\u4EE3\u7801";
-      }, 2500);
+      if (!this.copyButtonTimers[button]) {
+        button.innerHTML = "\u2713 \u5DF2\u590D\u5236";
+        this.copyButtonTimers[button] = setTimeout((_) => {
+          button.innerHTML = "\u590D\u5236\u4EE3\u7801";
+          delete this.copyButtonTimers[button];
+        }, 2500);
+      }
     });
     this.$emit("message-added", {
       message: this.message,
