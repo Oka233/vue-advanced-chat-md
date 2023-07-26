@@ -15,7 +15,7 @@
 		</slot>
 
 		<room-header
-			v-else
+			v-else-if="!hideHeader"
 			:current-user-id="currentUserId"
 			:text-messages="textMessages"
 			:single-room="singleRoom"
@@ -42,6 +42,7 @@
 			id="messages-list"
 			ref="scrollContainer"
 			class="vac-container-scroll"
+      :class="{'vac-hide-header': hideHeader}"
 			@scroll="onContainerScroll"
 		>
 			<loader :show="loadingMessages" type="messages">
@@ -226,7 +227,8 @@ export default {
 		templatesText: { type: Array, default: null },
 		usernameOptions: { type: Object, required: true },
 		emojiDataSource: { type: String, default: undefined },
-		sendDisabled: { type: Boolean, default: false }
+		sendDisabled: { type: Boolean, default: false },
+    hideHeader: { type: Boolean, required: true }
 	},
 
 	emits: [

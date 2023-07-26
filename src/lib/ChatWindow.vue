@@ -70,6 +70,7 @@
 				:username-options="usernameOptionsCasted"
 				:emoji-data-source="emojiDataSource"
         :send-disabled="sendDisabledCasted"
+        :hide-header='hideHeaderCasted'
 				@toggle-rooms-list="toggleRoomsList"
 				@room-info="roomInfo"
 				@fetch-messages="fetchMessages"
@@ -213,7 +214,8 @@ export default {
 			default: () => ({ minUsers: 3, currentUser: false })
 		},
 		emojiDataSource: { type: String, default: undefined },
-		sendDisabled: { type: [Boolean, String], default: false }
+		sendDisabled: { type: [Boolean, String], default: false },
+    hideHeader: { type: [Boolean, String], default: false }
 	},
 
 	emits: [
@@ -386,7 +388,10 @@ export default {
 		},
     sendDisabledCasted() {
       return this.castBoolean(this.sendDisabled)
-    }
+    },
+    hideHeaderCasted() {
+      return this.castBoolean(this.hideHeader)
+    },
 	},
 
 	watch: {
